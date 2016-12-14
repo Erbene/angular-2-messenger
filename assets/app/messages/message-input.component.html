@@ -2,8 +2,9 @@
     <form (ngSubmit)="onSubmit(myform)" #myform="ngForm">
         <div class="form-group">
             <label for="content">Content</label>
-            <input type="text" class="form-control" id="content" name="content" required ngModel >
+            <input type="text" class="form-control" id="content" name="content" required [ngModel]="message?.content" >
         </div>
         <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-danger" type="button" (click)="onClear(myform)">Clear</button>
     </form>
 </div>
