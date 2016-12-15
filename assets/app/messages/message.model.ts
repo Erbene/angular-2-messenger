@@ -2,12 +2,12 @@ export class  Message {
     username: string;
     content: string;
     userId: string;
-    messageId: string;
+    _id: string;
 
     constructor(content:string,username:string,userId?:string,messageId?:string){
         this.content = content;
         this.username = username;
         this.userId = userId;
-        this.messageId = messageId;
+        this._id = messageId;
     }
 }

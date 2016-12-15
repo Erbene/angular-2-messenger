@@ -15,11 +15,14 @@ export class MessageService {
     constructor(private http:Http){}
 
     addMessage(message:Message){
-        this.messages.push(message);
         const body = JSON.stringify(message);
         const headers = new Headers({'Content-type': 'application/json'});
         return this.http.post('/message', body, { headers: headers })
-            .map((response:Response) => response.json())
+            .map((response:Response) => {
+                const newMessage = new Message(response.json().obj.content,'Erbene',null,response.json().obj._id);
+                this.messages.push(newMessage);
+                return newMessage;
+            })
             .catch((error:Response) => Observable.throw(error.json()));
     }
     getMessages(){
@@ -28,7 +31,7 @@ export class MessageService {
                 const messages = response.json().obj;
                 let transformedMessages:Message[] = [];
                 for(let message of messages){
-                    transformedMessages.push(new Message(message.content,'Erbene',null,message.id));
+                    transformedMessages.push(new Message(message.content,'Erbene',null,message._id));
                 }
                 this.messages = transformedMessages;
                 return transformedMessages;
@@ -36,7 +39,21 @@ export class MessageService {
             .catch((error:Response) => Observable.throw(error.json()));
     }
     deleteMessage(message:Message){
-        this.messages.splice(this.messages.indexOf(message));
+        return this.http.delete('/message/'+message._id)
+            .map((response:Response) => {
+                this.messages.splice(this.messages.indexOf(message));
+                return response.json();
+            })
+            .catch((error:Response) => Observable.throw(error.json()));
+    }
+    updateMessage(message:Message){
+        const body = JSON.stringify(message);
+        const headers = new Headers({'Content-type': 'application/json'});
+        return this.http.patch('/message/'+message._id, body, { headers: headers })
+            .map((response:Response) => {
+                message.content = response.json().obj.content;
+            })
+            .catch((error:Response) => Observable.throw(error.json()));
     }
     editMessage(message:Message){
         this.onEditEvent.emit(message);
