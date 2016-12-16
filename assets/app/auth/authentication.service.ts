@@ -16,7 +16,14 @@ export class AuthenticationService {
     signup(user:User) {
         const body = JSON.stringify(user);
         const headers = new Headers({'Content-Type':'application/json'})
-        return this.http.post('/user/signup',body,{headers: headers})
+        return this.http.post('/user/',body,{headers: headers})
+            .map((response:Response) => response.json())
+            .catch((error:Response) => Observable.throw(error.json()));
+    }
+    signin(user:User) {
+        const body = JSON.stringify(user);
+        const headers = new Headers({'Content-Type':'application/json'})
+        return this.http.post('/user/signin',body,{headers: headers})
             .map((response:Response) => response.json())
             .catch((error:Response) => Observable.throw(error.json()));
     }
