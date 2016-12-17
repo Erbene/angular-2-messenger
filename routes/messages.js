@@ -10,6 +10,7 @@ var jwt = require('jsonwebtoken');
 
 router.get('/', function(req,res,next){
     Message.find()
+        .populate('user','firstName')
         .exec(function(err,messages){
             if(err){
                 return res.status(500).json({
@@ -47,7 +48,7 @@ router.post('/', function (req, res, next) {
             content: req.body.content,
             user: user
         });
-        
+
         message.save(function(err,result){
             if(err){
                 return res.status(500).json({

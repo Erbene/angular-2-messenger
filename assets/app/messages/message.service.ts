@@ -20,7 +20,7 @@ export class MessageService {
         const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
         return this.http.post('/message'+token, body, { headers: headers })
             .map((response:Response) => {
-                const newMessage = new Message(response.json().obj.content,'Erbene',null,response.json().obj._id);
+                const newMessage = new Message(response.json().obj.content,response.json().obj.user.firstName,response.json().obj.user._id,response.json().obj._id);
                 this.messages.push(newMessage);
                 return newMessage;
             })
@@ -32,7 +32,7 @@ export class MessageService {
                 const messages = response.json().obj;
                 let transformedMessages:Message[] = [];
                 for(let message of messages){
-                    transformedMessages.push(new Message(message.content,'Erbene',null,message._id));
+                    transformedMessages.push(new Message(message.content,message.user.firstName,message.user._id,message._id));
                 }
                 this.messages = transformedMessages;
                 return transformedMessages;
@@ -50,7 +50,7 @@ export class MessageService {
     }
     updateMessage(message:Message){
         const body = JSON.stringify(message);
-        const token = localStorage.getItem('') ? '?token=' + localStorage.getItem('token') : '';
+        const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
         const headers = new Headers({'Content-type': 'application/json'});
         return this.http.patch('/message/'+message._id+token, body, { headers: headers })
             .map((response:Response) => {
