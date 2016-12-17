@@ -18,7 +18,7 @@ export class SigninComponent {
         this.authenticationService.signin(user)
         .subscribe(
             (data)=>{
-                localStorage.setItem('jw-token',data.token);
+                localStorage.setItem('token',data.token);
                 localStorage.setItem('userId',data.userId);
                 this.router.navigateByUrl('/')
             },
