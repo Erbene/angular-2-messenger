@@ -12,7 +12,7 @@ import { ErrorService } from '../error/error.service';
 @Injectable()
 export class MessageService {
     private messages: Message[] = [];
-    onEditEvent:EventEmitter = new EventEmitter<Message>();
+    onEditEvent = new EventEmitter<Message>();
 
     constructor(private http:Http, private errorService: ErrorService){}
 
