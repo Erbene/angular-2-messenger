@@ -21,8 +21,8 @@ import { ErrorService } from './error.service';
     `]
 })
 export class ErrorComponent implements OnInit {
-    private error:Error;
-    private display: string = 'none';
+    public error:Error;
+    public display: string = 'none';
     constructor(private errorService: ErrorService){}
     ngOnInit(){
         this.errorService.errorOccurred.subscribe((error:Error)=>{

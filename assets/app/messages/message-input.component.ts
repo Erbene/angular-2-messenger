@@ -10,7 +10,7 @@ import { NgForm } from '@angular/forms';
     templateUrl: './message-input.component.html',
 })
 export class MessageInputComponent implements OnInit {
-    private message:Message;
+    message:Message;
 
     constructor(private messageService:MessageService){}
     ngOnInit(){
