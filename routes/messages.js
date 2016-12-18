@@ -15,7 +15,7 @@ router.get('/', function(req,res,next){
             if(err){
                 return res.status(500).json({
                     title: 'Something went wrong...',
-                    message: err
+                    error: err
                 });
             }
             res.status(200).json({
@@ -29,7 +29,7 @@ router.use('/', function(req,res,next){
         if(err){
             return res.status(401).json({
                 title: 'Not Authenticated',
-                message: err
+                error: err
             });
         }
         next();
@@ -41,7 +41,7 @@ router.post('/', function (req, res, next) {
         if(err){
             return res.status(500).json({
                 title: 'Something went wrong...',
-                message: err
+                error: err
             });
         }
         var message = new Message({

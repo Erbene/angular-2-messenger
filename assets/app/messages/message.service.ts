@@ -6,13 +6,15 @@ import { Injectable, EventEmitter } from '@angular/core';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs';
 
-import {Message} from './message.model';
+import { Message } from './message.model';
+import { ErrorService } from '../error/error.service';
+
 @Injectable()
 export class MessageService {
     private messages: Message[] = [];
     onEditEvent:EventEmitter = new EventEmitter<Message>();
 
-    constructor(private http:Http){}
+    constructor(private http:Http, private errorService: ErrorService){}
 
     addMessage(message:Message){
         const body = JSON.stringify(message);
@@ -24,7 +26,10 @@ export class MessageService {
                 this.messages.push(newMessage);
                 return newMessage;
             })
-            .catch((error:Response) => Observable.throw(error.json()));
+            .catch((error:Response) => {
+                this.errorService.handleError(error.json())
+                return Observable.throw(error.json());
+            });
     }
     getMessages(){
         return this.http.get('/message')
@@ -37,7 +42,10 @@ export class MessageService {
                 this.messages = transformedMessages;
                 return transformedMessages;
             })
-            .catch((error:Response) => Observable.throw(error.json()));
+            .catch((error:Response) => {
+                this.errorService.handleError(error.json())
+                return Observable.throw(error.json());
+            });
     }
     deleteMessage(message:Message){
         const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
@@ -46,7 +54,10 @@ export class MessageService {
                 this.messages.splice(this.messages.indexOf(message));
                 return response.json();
             })
-            .catch((error:Response) => Observable.throw(error.json()));
+            .catch((error:Response) => {
+                this.errorService.handleError(error.json())
+                return Observable.throw(error.json());
+            });
     }
     updateMessage(message:Message){
         const body = JSON.stringify(message);
@@ -56,7 +67,10 @@ export class MessageService {
             .map((response:Response) => {
                 message.content = response.json().obj.content;
             })
-            .catch((error:Response) => Observable.throw(error.json()));
+            .catch((error:Response) => {
+                this.errorService.handleError(error.json());
+                return Observable.throw(error.json());
+            });
     }
     editMessage(message:Message){
         this.onEditEvent.emit(message);
