@@ -9,8 +9,12 @@ var appRoutes = require('./routes/app');
 var messageRoutes = require('./routes/messages');
 var userRoutes = require('./routes/user');
 var mongoose = require('mongoose');
+var config = require('./config.json');
 
-mongoose.connect('localhost:27017/node-angular');
+if(!!config.mongodbUsername && !!config.mongodbPassword)
+    mongoose.connect('mongodb://'+config.mongodbUsername+':'+config.mongodbPassword+'@'+config.mongodbHost+':'+config.mongodbPort+'/'+config.mongodbDatabase);
+else
+    mongoose.connect('mongodb://'+config.mongodbHost+':'+config.mongodbPort+'/'+config.mongodbDatabase);
 
 var app = express();
 

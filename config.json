@@ -1,0 +1,7 @@
+{
+  "mongodbHost":"localhost",
+  "mongodbUsername":"",
+  "mongodbPassword":"",
+  "mongodbPort": 27017,
+  "mongodbDatabase": "node-angular"
+}
