@@ -9,7 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Requirements
 
 * [Node.js](https://nodejs.org) - JavaScript runtime
-* [MongoDB](https://www.mongodb.com/) - Relational database
+* [MongoDB](https://www.mongodb.com/) - Database
 
 ### Installing
 
