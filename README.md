@@ -33,5 +33,3 @@ To build the front-end in production mode, you have to use the following command
 npm run build:prod
 ```
 This command builds the front-end application with angular AOT compiler, in a way that drastically decreases its size. You can find more about why this happens and what AOT compiler is [here](https://angular.io/docs/ts/latest/cookbook/aot-compiler.html).
-
-(Readme To be finished)
